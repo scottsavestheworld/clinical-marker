@@ -3,13 +3,33 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href='https://fonts.googleapis.com/css?family=Roboto:400,500,300,100,700,900' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" type="text/css" href="css/styles.css">
         <script src="js/scripts.js"></script>
         <script src="js/models.js"></script>
     </head>
     <body>
-        <header><span id="username">Scott Van Der Sluys</span></header>
-        <section id="subject-canvas"></section><br>
-        <footer><span id="previous-subject">Previous</span><span id="subject-name"></span><span id="next-subject">Next</span></footer>
+        <header>
+            <div id="accounts">
+                <div>Account:</div>
+                <select id="account-list">
+                    <option value="0">Dr. Jean Grey</option>
+                    <option value="1">Dr. Curt Connors</option>
+                    <option value="2">Dr. Bruce Banner</option>
+                </select>
+            </div>
+            <div id="subjects">
+                <div>Subject:</div>
+                <select id="subject-list"></select>
+            </div>
+        </header>
+
+        <section id="subject-canvas">
+            <div id="subject-face"></div>
+        </section>
+
+        <footer>
+            <span id="subject-name">No Subject Selected</span>
+        </footer>
     </body>
 </html>

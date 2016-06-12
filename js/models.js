@@ -1,6 +1,6 @@
 var session = {
-    subjects : [],
-    loadedSubject : 0
+    subjects : {},
+    loadedSubject : ""
 }
 
 var Subject = function (dataObject) {
@@ -8,22 +8,38 @@ var Subject = function (dataObject) {
     this.element       = document.createElement("div");
     this.element.id    = "subject-face";
     this.element.model = this;
-    
+
     this.properties = {
         id      : data.id      || "Unknown ID", 
         name    : data.name    || "Unknown Name",
         markers : data.markers || {},
     };
 
-    this.setEvents().setMarkers();
+    this.setEvents().setMarkers().addToDropdown();
 };
 
 Subject.prototype.loadSubject = function () {
     var subjectElement = document.getElementById("subject-canvas"),
-        subjectName = document.getElementById("subject-name");
+        subjectName    = document.getElementById("subject-name"),
+        subjectList    = document.getElementById("subject-list"),
+        subjectIndex   = -1;
+
     subjectName.innerHTML = this.properties.name;
     subjectElement.innerHTML = "";
     subjectElement.appendChild(this.element);
+
+
+    for (var i = 0; i < subjectList.options.length; i++) {
+        if (subjectList.options[i].value === this.properties.id) {
+            subjectIndex = i;
+            break;
+        }
+    }
+    subjectList.selectedIndex = subjectIndex;
+    
+    localStorage.loadedSubject = this.properties.id;
+
+    this.countMarkers();
 
     return this;
 };
@@ -51,7 +67,8 @@ Subject.prototype.setEvents = function () {
 Subject.prototype.setMarkers = function () {
     var markers = this.properties.markers, i;
 
-    this.element.innerHTML = "";
+    this.element.innerHTML = '<div class="key inflammatory"></div><div class="key noninflammatory"></div>';
+
     for (i in markers) {
         this.addMarker(markers[i]);
     }
@@ -79,6 +96,15 @@ Subject.prototype.addMarker = function (markerObject) {
     thisSubject.element.appendChild(marker);
     
     return marker;
+};
+
+Subject.prototype.addToDropdown = function () {
+    var optionElement = document.createElement("option"),
+        selectElement = document.getElementById("subject-list");
+    
+    optionElement.innerHTML = this.properties.name;
+    optionElement.value = this.properties.id;
+    selectElement.appendChild(optionElement);
 };
 
 Subject.prototype.addMarkerMenu = function (marker) {
@@ -118,6 +144,7 @@ Subject.prototype.addMarkerMenu = function (marker) {
         menu.onclick = function (e) {
             $$.removeMarkerMenu();
             thisSubject.save();
+            thisSubject.countMarkers();
             e.preventDefault();
             e.stopPropagation();
         }
@@ -145,4 +172,16 @@ Subject.prototype.removeMarker = function (marker) {
 
 Subject.prototype.save = function () {
     localStorage[this.properties.id] = JSON.stringify(this.properties);
+};
+
+Subject.prototype.countMarkers = function () {
+    var markerTypes = { inflammatory: 0, noninflammatory: 0, unknown: 0 },
+        allMarkers = this.properties.markers, i;
+    for (i in allMarkers) {
+        markerTypes[allMarkers[i].type] ++;
+    }
+
+    document.querySelector(".key.inflammatory").innerHTML = markerTypes.inflammatory;
+    document.querySelector(".key.noninflammatory").innerHTML = markerTypes.noninflammatory;
+    
 };

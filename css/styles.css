@@ -1,12 +1,14 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
 *, *:before, *:after {
     box-sizing: border-box;
 }
 
 html {
     height: 100%;
-    font-family: "Roboto";
+    font-family: 'Roboto', sans-serif;
     font-size: 16px;
-    background-color: #2d3f4d;
+    background-color: #FFF;
     color: #666;
     cursor: default;
 }
@@ -16,6 +18,7 @@ body {
     margin: 0px;
     width: 100%;
     height: 100%;
+    min-width: 500px;
     padding: 0px;
     background-size: cover;
     background-position: center;
@@ -23,16 +26,56 @@ body {
 }
 
 header {
+    position: absolute;
+    z-index: 1001;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 10%;
 }
 
+header > div {
+    position: absolute;
+    top: 0px;
+    display: inline-block;
+    padding: 16px;
+    color: rgba(0, 0, 0, .5);
+    font-size: 16px;
+}
+
+header > div > div {
+    display: inline-block;
+    width: 200px;
+    padding: 0px 0px 4px 8px;
+    text-align: left;
+}
+
+select {
+    display: block;
+    height: 28px;
+    width: 200px;
+    font-size: 18px;
+    color: rgba(0, 0, 0, .8);
+    background: rgba(0, 0, 0, .05);
+    outline: none;
+    border: 0;
+}
+
+#subjects {
+    text-align: right;
+    right: 0px;
+}
+
 #subject-canvas {
-    margin: 0px auto;
+    position: relative;
+    top: 5vh;
+    margin: 0 auto;
     width: 80vh;
     height: 80vh;
     max-width: 80vw;
     max-height: 80vw;
+    min-width: 500px;
+    min-height: 500px;
     font-size: 50px;
     line-height: 100px;
     color: #FFF;
@@ -143,25 +186,55 @@ header {
 }
 
 .key {
-    position: relative;
-
+    position: absolute;
+    z-index: 1000;
     display: inline-block;
-    height: 80px;
-    width: 40%;
-    line-height: 2em;
-    font-size: 16px;
+    bottom: 0px;
+    left: 30px;
+    width: 3em;
+    height: 3em;
+    font-size: 28px;
+    font-weight: 700;
+    text-shadow: 1px 1px 0 #FF5800,
+        -1px -1px 0 #FF5800,
+        1px -1px 0 #FF5800,
+        -1px 1px 0 #FF5800,
+        0px 1px 0 #FF5800,
+        1px 0px 0 #FF5800,
+        0px -1px 0 #FF5800,
+        -1px 0px 0 #FF5800;
+    line-height: 3.125em;
+    background-color: rgba(255, 255, 255, .5);
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
-    border-radius: 24px;
+    border-radius: 50%;
 }
 
 .key:after {
+    text-align: center;
     position: absolute;
-    left: 0px;
-    bottom: -20px;
-    width: 100%;
-    color: #BBB;
+    left: calc(50% - 100px);
+    bottom: -40px;
+    width: 200px;
+    font-size: 1.75vh;
+    font-weight: 300;
+    text-shadow: none;
+    color: rgba(0, 0, 0, .4);
+    transition: opacity .5s;
+}
+
+.key.noninflammatory {
+    left: auto;
+    right: 30px;
+    text-shadow: 1px 1px 0 #1FCAFF,
+        -1px -1px 0 #1FCAFF,
+        1px -1px 0 #1FCAFF,
+        -1px 1px 0 #1FCAFF,
+        0px 1px 0 #1FCAFF,
+        1px 0px 0 #1FCAFF,
+        0px -1px 0 #1FCAFF,
+        -1px 0px 0 #1FCAFF;
 }
 
 .key.inflammatory:after {
@@ -173,8 +246,11 @@ header {
 }
 
 footer {
+    position: relative;
+    top: 7.5vh;
     text-align: center;
     height: 10%;
-    font-size: 2em;
-    color: #CCC;
+    line-height: 10vh;
+    font-size: 4vh;
+    color: rgba(0, 0, 0, .5);
 }
